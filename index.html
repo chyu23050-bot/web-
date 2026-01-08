@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天気予報アプリ</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            text-align: center;
+            color: #333;
+            padding: 20px;
+            
+            /* 背景画像の設定 */
+            background-color: #f0f0f0;      /* 画像がない時の色 */
+            background-size: cover;         /* 画面いっぱいに広げる */
+            background-position: center;    /* 中央に合わせる */
+            background-repeat: no-repeat;   /* 繰り返さない */
+            background-attachment: fixed;   /* スクロールしても背景を固定 */
+            transition: background-image 1s ease; /* ふわっと切り替える */
+            min-height: 100vh;              /* 最低でも画面の高さ分は確保 */
+        }
+        
+        /* 文字が見やすくなるように背景に半透明の白を敷く */
+        h1, h2, h3, p {
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+
+        /* --- ローディング画面 --- */
+        .loader-wrap {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none; z-index: 9999;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        .loader {
+            border: 8px solid #f3f3f3; border-top: 8px solid #3498db;
+            border-radius: 50%; width: 60px; height: 60px;
+            animation: spin 1s linear infinite; margin-bottom: 10px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- 今日の天気カード --- */
+        #weather {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85); /* 半透明の白 */
+            border-radius: 15px;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #weather img { width: 100px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
+        #weather .temp { font-size: 36px; font-weight: bold; color: #ff5722; }
+        #weather .description { font-size: 16px; color: #555; font-weight: bold; }
+
+        /* --- 都市名の表示 --- */
+        #place {
+            background-color: rgba(255, 255, 255, 0.6);
+            display: inline-block;
+            padding: 5px 25px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+        }
+
+        /* --- 予報テーブル --- */
+        #forecast-wrap {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%; border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px; border-bottom: 1px solid #ddd;
+        }
+        th { background-color: #f9f9f9; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <div id="loader" class="loader-wrap">
+        <div class="loader"></div>
+        <p>空の様子を確認中...</p>
+    </div>
+
+    <h1>天気予報アプリ</h1>
+    
+    <h2 id="place"></h2>
+
+    <div id="weather"></div>
+
+    <div id="forecast-wrap">
+        <h3>今後の予報</h3>
+        <table id="forecast">
+            <thead>
+                <tr>
+                    <th>日時</th>
+                    <th>天気</th>
+                    <th>気温</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
